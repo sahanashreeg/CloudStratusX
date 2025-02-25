@@ -1,0 +1,49 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # This will trigger the CI/CD pipeline whenever you push to the "main" branch.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # This will run on Ubuntu servers.
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Set up Minikube
+        uses: google-github-actions/setup-minikube@v0.1.0
+        with:
+          minikube-version: 'latest'
+
+      - name: Build Docker images
+        run: |
+          docker build -t product-service ./docker/product-service
+          docker build -t order-service ./docker/order-service
+          docker build -t user-service ./docker/user-service
+
+      - name: Push Docker images to IBM Cloud
+        run: |
+          docker login -u ${{ secrets.IBM_CLOUD_USERNAME }} -p ${{ secrets.IBM_CLOUD_API_KEY }} https://cp.icr.io
+          docker push product-service
+          docker push order-service
+          docker push user-service
+
+      - name: Set up Kubernetes
+        run: |
+          minikube start --driver=docker
+          kubectl config use-context minikube
+
+      - name: Apply Kubernetes configurations
+        run: |
+          kubectl apply -f kubernetes/deployments/product-service-deployment.yaml
+          kubectl apply -f kubernetes/services/product-service-service.yaml
+          kubectl apply -f kubernetes/deployments/order-service-deployment.yaml
+          kubectl apply -f kubernetes/services/order-service-service.yaml
+          kubectl apply -f kubernetes/deployments/user-service-deployment.yaml
+          kubectl apply -f kubernetes/services/user-service-service.yaml
