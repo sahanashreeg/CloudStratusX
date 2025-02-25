@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      imagePullSecrets:
+        - name: ibm-cr-secret
+
+      containers:
+        - name: product-service
+          image: icr.io/ecommerceapp-v1/product-service:latest
+          ports:
+            - containerPort: 5000

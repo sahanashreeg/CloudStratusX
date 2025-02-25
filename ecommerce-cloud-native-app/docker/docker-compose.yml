@@ -1,0 +1,21 @@
+services:
+  product-service:
+    build:
+      context: ./product-service
+    image: icr.io/ecommerceapp-v1/product-service:latest
+    ports:
+      - "5000:80"
+
+  order-service:
+    build:
+      context: ./order-service
+    image: icr.io/ecommerceapp-v1/order-service:latest
+    ports:
+      - "5001:80"
+
+  user-service:
+    build:
+      context: ./user-service
+    image: icr.io/ecommerceapp-v1/user-service:latest
+    ports:
+      - "5002:80"
