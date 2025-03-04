@@ -52,9 +52,7 @@ Setup and Installation
 
 4. Deploy using Minikube and Kubernetes:
    ```bash
-   kubectl apply -f kubernetes/deployments/
-   kubectl apply -f kubernetes/services/
-   kubectl apply -f kubernetes/ingress/
+   kubectl apply -f kubernetes/
    ```
 
 5. Access the application via Minikube:
