@@ -44,16 +44,6 @@ This project demonstrates how cloud-native technologies can be used to build mod
 * ⚡ Independent service scaling
 * 🧪 Unit and integration testing
 ---
---
-
-## 🎥 Demo Video
-
-Watch the project demonstration here:
-
-[▶️ Watch Demo]  YOUTUBE_VIDEO_LINK : https://youtu.be/1jC1QsR348E
-
-
----
 
 ## 🏗️ Microservices Architecture
 
